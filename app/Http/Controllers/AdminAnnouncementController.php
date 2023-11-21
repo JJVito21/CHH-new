@@ -2,29 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MemberAnnouncement;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 
-class AnnouncementController extends Controller
+class AdminAnnouncementController extends Controller
 {
-    // function announcement()
-    // {
-    //     return view('announcement');
-    // }
-    public function announcement()
+    public function adminannouncement()
     {
 
-        $data = MemberAnnouncement::all();
-        return view('announcement', compact('data'));
+        $data = Announcement::all();
+        return view('adminannouncement', compact('data'));
         // $announcement = Announcement::all();
 
         // return view('adminannouncement', ['data' => $announcement]);
     }
 
-    // public function add()
-    // {
-    //     return view('pages.add');
-    // }
 
     public function addadminannouncement(Request $request)
     {
@@ -32,11 +24,15 @@ class AnnouncementController extends Controller
             //db_column_name => $request->name;
             'file_name' => $request->file_name,
             'date' => $request->date,
-
         ];
 
         // var_dump($data);
-        $newadminannouncement = MemberAnnouncement::create($data);
+        $newadminannouncement = Announcement::create($data);
+        return redirect(route('adminannouncement'));
+    }
+    public function deleteAnnouncement(Announcement $announcement)
+    {
+        $announcement->delete();
         return redirect(route('adminannouncement'));
     }
 }

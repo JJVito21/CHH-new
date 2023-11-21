@@ -14,8 +14,9 @@
     
     <div class="wrapper">
       <div id="formContent">
-          <img src="{{ URL('images/CHH.png') }}" alt="logo" style="width: 4rem">
-     
+        <div class="mt-4">
+          <img src="{{ URL('images/CHH logo.png') }}" alt="logo" style="width: 4rem">
+        </div>
         <form>
           <input type="text" id="login" name="login" placeholder="Username">
           <input type="text" id="password" name="login" placeholder="Password">
