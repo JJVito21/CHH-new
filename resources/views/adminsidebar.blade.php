@@ -69,10 +69,10 @@ div.content {
         <img src="{{ URL('images/CHH logo.png') }}" alt="logo" style="width: 4rem" class="pic">
     </div>
     <div class="text-center mt-5">
-  <a href="/adminhomepage">Members</a>
-  <a href="/adminannouncement">Announcements</a>
-  <a href="/adminevent">Events</a>
-  <a href="#about">About</a>
+  <a href="{{ route('adminhomepage') }}">Members</a>
+  <a href="{{ route('adminannouncement') }}">Announcements</a>
+  <a href="{{ '/admin/event' }}">Events</a>
+  <a href="{{ '#' }}">About</a>
   </div>
 </div>
 

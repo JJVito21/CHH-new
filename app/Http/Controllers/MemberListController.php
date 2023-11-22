@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Album;
 
-class AlbumListController extends Controller
+class MemberListController extends Controller
 {
     //
     public function index()
@@ -81,13 +81,13 @@ class AlbumListController extends Controller
 
         // var_dump($data);
         $album->update($data);
-        return redirect(route('index'));
+        return redirect(route('adminhomepage'));
     }
 
     public function deleteAlbum(Album $album)
     {
         $album->delete();
-        return redirect(route('index'));
+        return redirect(route('adminhomepage'));
     }
 
     public function viewAlbum(Album $album)

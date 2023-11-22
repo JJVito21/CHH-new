@@ -23,7 +23,7 @@
   <input type="hidden" name="date" value="{{ $announcement->date ?? now()->format('Y-m-d') }}">
 
 </div>
-<button type="submit" class="btn btn-primary col-md-2 offset-7 mb-5">Sign in</button>
+<button type="submit" class="btn btn-primary col-md-2 offset-7 mb-5">Upload Document</button>
 
 </div>
 

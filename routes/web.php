@@ -12,7 +12,7 @@ use App\Http\Controllers\AdminHomePageController;
 use App\Http\Controllers\AdminAnnouncementController;
 use App\Http\Controllers\AdminMemberUpdateController;
 use App\Http\Controllers\AdminMemberInfo;
-use App\Http\Controllers\AlbumListController;
+use App\Http\Controllers\MemberListController;
 use App\Http\Controllers\AnnouncementUploadController;
 use App\Http\Controllers\DownloadController;
 use App\Http\Controllers\SearchController;
@@ -27,37 +27,54 @@ use App\Http\Controllers\SearchController;
 |
 */
 
+// Member Pages
 Route::get('/', [MainController::class, 'main']);
-Route::get('/admin', [AdminController::class, 'admin']);
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::get('/event', [EventController::class, 'event']);
+Route::get('/eventproposal', [EventProposalController::class, 'eventproposal']);
 Route::get('/announcement', [AnnouncementController::class, 'announcement']);
-// Route::get('/adminevent', [AdminEventController::class, 'adminevent']);
+
 Route::controller(EventController::class)->group(function () {
     Route::get('/event', 'event')->name('event.get');
     Route::post('/event', 'store')->name('event.store');
 });
 
+// Admin Pages
+// FOR LOGGING IN ADMIN CREDENTIALS
+Route::get('/admin', [AdminController::class, 'admin']);                                           
+// DISPLAYS MEMBERS, REPORT SUMMARIES, ETC.
+Route::get('/admin/dashboard', [MemberListController::class, 'index'])->name('adminhomepage');
+
+// FOR DISPLAYING CALENDAR OF EVENTS
 Route::controller(AdminEventController::class)->group(function () {
-    Route::get('/adminevent', 'adminevent')->name('adminevent.get');
-    Route::post('/adminevent', 'store')->name('adminevent.store');
+    Route::get('/admin/events', 'adminevent')->name('adminevent.get');
+    Route::post('/admin/events', 'store')->name('adminevent.store');
 });
-Route::get('/eventproposal', [EventProposalController::class, 'eventproposal']);
-Route::get('/adminhomepage', [AdminHomePageController::class, 'adminhomepage']);
-Route::get('/adminannouncement', [AdminAnnouncementController::class, 'adminannouncement']);
-Route::get('/adminmemberupdate', [AdminMemberUpdateController::class, 'adminmemberupdate']);
-Route::get('/adminmemberinfo', [AdminMemberInfo::class, 'adminmemberinfo']);
+
+// FOR DISPLAYING ADMIN ANNOUNCEMENTS
+Route::get('/admin/announcement', [AdminAnnouncementController::class, 'adminannouncement'])->name('adminannouncement');
+// FOR UPLOADING NEW ANNOUNCEMENTS
+Route::get('/admin/announcement/upload', [AnnouncementUploadController::class, 'announcementupload'])->name('announcementupload');
+Route::post('/admin/announcement/upload', [AdminAnnouncementController::class, 'addadminannouncement'])->name('addadminannouncement');
+// FOR DELETING EXISTING ANNOUNCEMENTS
+Route::delete('/announcement/{announcement}/delete', [AdminAnnouncementController::class, 'deleteAnnouncement'])->name('deleteAnnouncement');
+
+// Route::get('/adminmemberupdate', [AdminMemberUpdateController::class, 'adminmemberupdate']);
+// Route::get('/adminmemberinfo', [AdminMemberInfo::class, 'adminmemberinfo']);
 
 
-//crud
-Route::get('/album/{album}', [AlbumListController::class, 'showAlbum'])->name('showAlbum');
-Route::get('/adminhomepage', [AlbumListController::class, 'index'])->name('adminhomepage');
-Route::get('/album_list', [AlbumListController::class, 'index'])->name('index');
-Route::get('/add', [AlbumListController::class, 'add'])->name('add');
-Route::post('/add', [AlbumListController::class, 'addAlbum'])->name('addAlbum');
-Route::get('/album/{album}/update', [AlbumListController::class, 'update'])->name('update');
-Route::put('/album/{album}/edit', [AlbumListController::class, 'updateAlbum'])->name('updateAlbum');
-Route::delete('/album/{album}/delete', [AlbumListController::class, 'deleteAlbum'])->name('deleteAlbum');
+
+// MEMBER CRUD FUNCTIONS
+Route::get('admin/album/{album}', [MemberListController::class, 'showAlbum'])->name('showAlbum');
+
+//Route::get('/album_list', [AlbumListController::class, 'index'])->name('index');
+Route::get('/add', [MemberListController::class, 'add'])->name('add');
+Route::post('/add', [MemberListController::class, 'addAlbum'])->name('addAlbum');
+
+Route::get('/album/{album}/update', [MemberListController::class, 'update'])->name('update');
+Route::put('/album/{album}/edit', [MemberListController::class, 'updateAlbum'])->name('updateAlbum');
+
+Route::delete('/album/{album}/delete', [MemberListController::class, 'deleteAlbum'])->name('deleteAlbum');
 
 //announcement
 // Route::controller(AdminAnnouncementController::class)->group(function () {
@@ -65,18 +82,12 @@ Route::delete('/album/{album}/delete', [AlbumListController::class, 'deleteAlbum
 //     Route::post('/adminannouncement', 'store')->name('adminannouncement.store');
 // });
 
-Route::delete('/announcement/{announcement}/delete', [AdminAnnouncementController::class, 'deleteAnnouncement'])->name('deleteAnnouncement');
-Route::post('/adminannouncement', [AdminAnnouncementController::class, 'addadminannouncement'])->name('addadminannouncement');
-Route::get('/announcementupload', [AnnouncementUploadController::class, 'announcementupload'])->name('announcementupload');
-Route::get('/adminannouncement', [AdminAnnouncementController::class, 'adminannouncement'])->name('adminannouncement');
-//download
-// Route::get('/download/{file}', [DownloadController::class, 'download'])->name('download');
-Route::get('/download/{file}', [DownloadController::class, 'download']);
-Route::get('/upload', [DownloadController::class, 'showForm'])->name('upload');
-Route::post('/upload', [DownloadController::class, 'uploadFile'])->name('upload');
-Route::get('/download-announcement/{announcement}', 'AnnouncementController@download')->name('downloadAnnouncement');
+// Route::get('/download/{file}', [DownloadController::class, 'download']);
+// Route::get('/upload', [DownloadController::class, 'showForm'])->name('upload');
+// Route::post('/upload', [DownloadController::class, 'uploadFile'])->name('upload');
+// Route::get('/download-announcement/{announcement}', 'AnnouncementController@download')->name('downloadAnnouncement');
 
 
-//search
+// SEARCH FUNCTION
 // In your web.php routes file
 Route::get('/search', [SearchController::class, 'search'])->name('search');

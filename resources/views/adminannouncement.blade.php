@@ -39,7 +39,7 @@
 </tbody>
 </table>
 
-  <a href="/announcementupload">Upload</a>
+  <a href="{{ route('announcementupload') }}">Upload</a>
 </div>
 {{-- </form> --}}
 @endsection 
